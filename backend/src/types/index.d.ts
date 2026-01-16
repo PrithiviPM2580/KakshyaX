@@ -1,3 +1,5 @@
+
+
 declare global {
   type ErrorDetails = {
     field?: string;
@@ -15,6 +17,7 @@ declare global {
     userId: string;
     role: "admin" | "student" | "teacher";
   }
+
 }
 
 export {};

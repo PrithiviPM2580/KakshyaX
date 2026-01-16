@@ -1,4 +1,5 @@
 import config from "@/config/env.config.js";
+import type { Response } from "express";
 import { z } from "zod";
 export function formatIssues(issues: z.ZodError["issues"]) {
   return issues.map((issue) => ({
@@ -13,3 +14,16 @@ export const corsOptions = {
   optionsSuccessStatus: 200,
   credentials: true,
 };
+
+export function successResponse<T>(
+  res: Response,
+  statusCode: number = 200,
+  message: string = "Success",
+  data?: T
+) {
+  return res.status(statusCode).json({
+    success: true,
+    message,
+    data,
+  });
+}
