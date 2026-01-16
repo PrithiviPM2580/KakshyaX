@@ -9,4 +9,5 @@ export const envSchema = z.object({
     .enum(["error", "warn", "info", "http", "verbose", "debug", "silly"])
     .default("info"),
   DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
+  CORS_ORIGIN: z.string().min(1, "CORS_ORIGIN is required"),
 });
