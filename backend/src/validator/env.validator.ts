@@ -8,4 +8,5 @@ export const envSchema = z.object({
   LOG_LEVEL: z
     .enum(["error", "warn", "info", "http", "verbose", "debug", "silly"])
     .default("info"),
+  DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
 });
