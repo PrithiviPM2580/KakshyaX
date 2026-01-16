@@ -15,6 +15,21 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+  user:{
+    additionalFields:{
+     role:{
+      type:"string",
+      required:true,
+      defaultValue:"student",
+      input:true
+     },
+     avatar:{
+      type:"string",
+      required:false,
+      input:true
+     }
+    }
+  },
   socialProviders: {
     google: {
       clientId: config.GOOGLE_CLIENT_ID,
