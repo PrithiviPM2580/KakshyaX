@@ -10,6 +10,11 @@ declare global {
   };
 
   type Errorresponse = string | ErrorType;
+
+  interface AuthUser {
+    userId: string;
+    role: "admin" | "student" | "teacher";
+  }
 }
 
 export {};
