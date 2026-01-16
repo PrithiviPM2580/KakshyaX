@@ -12,6 +12,8 @@ const envConfig = {
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   GOOGLE_REDIRECT_URI: process.env.GOOGLE_REDIRECT_URI,
+  APP_NAME: process.env.APP_NAME,
+  APP_VERSION: process.env.APP_VERSION,
 };
 
 const config = validate(envSchema, envConfig);
