@@ -30,6 +30,7 @@ declare global {
     search?: string | undefined;
     sortBy: "createdAt" | "email" | "name";
     order: "asc" | "desc";
+    userId?: string | undefined;
   }
 }
 

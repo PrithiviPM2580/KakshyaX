@@ -5,16 +5,20 @@ import type { GetUserByIdInput } from "@/validator/user.validator.js";
 export async function findUsers(
   options: FindAllOptions,
 ): Promise<Record<string, unknown>[]> {
-  const { skip, limit, search, sortBy, order } = options;
+  const { skip, limit, search, sortBy, order, userId } = options;
 
-  const filter = search
-    ? {
-        $or: [
-          { name: { $regex: search, $options: "i" } },
-          { email: { $regex: search, $options: "i" } },
-        ],
-      }
-    : {};
+  const filter: any = {};
+
+  if (search) {
+    filter.$or = [
+      { name: { $regex: search, $options: "i" } },
+      { email: { $regex: search, $options: "i" } },
+    ];
+  }
+
+  if (userId) {
+    filter._id = typeof userId === "string" ? new ObjectId(userId) : userId;
+  }
 
   const sortOrder = order === "asc" ? 1 : -1;
 
@@ -24,7 +28,7 @@ export async function findUsers(
     .sort({ [sortBy]: sortOrder })
     .skip(skip)
     .limit(limit)
-    .toArray()) as unknown as Record<string, unknown>[];
+    .toArray()) as Record<string, unknown>[];
 
   return users;
 }

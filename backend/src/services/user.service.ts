@@ -10,7 +10,10 @@ import {
 } from "@/repositories/user.repository.js";
 import { logger } from "better-auth";
 
-export async function getAllUserService(query: GetAllUserInput) {
+export async function getAllUserService(
+  query: GetAllUserInput,
+  userId: string | undefined,
+) {
   const { page, limit, search, sortBy, order } = query;
 
   const skip = (page - 1) * limit;
@@ -22,6 +25,7 @@ export async function getAllUserService(query: GetAllUserInput) {
       search,
       sortBy,
       order,
+      userId,
     }),
     countUsers({
       search,
