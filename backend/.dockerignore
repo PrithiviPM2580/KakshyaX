@@ -3,6 +3,9 @@
 # Ignore node modules
 node_modules
 
+# Ignore pnpm store
+.pnpm-store
+
 # Ignore logs
 logs
 *.log

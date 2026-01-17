@@ -3,6 +3,7 @@ import {
   connectToDatabase,
   gracefullyCloseDatabaseConnection,
 } from "./config/db.config.js";
+import { initializeAuth } from "./lib/auth.lib.js";
 import config from "./config/env.config.js";
 import logger from "./lib/logger.lib.js";
 
@@ -10,6 +11,7 @@ const PORT = config.PORT || 3000;
 
 const startServer = async () => {
   await connectToDatabase();
+  initializeAuth();
 
   const server = app.listen(PORT, () => {
     logger.info(`Server is running in http://localhost:${PORT}`);
@@ -20,7 +22,7 @@ const startServer = async () => {
       "Unhandled Rejection at:",
       promise,
       "reason:",
-      (reason as Error).message
+      (reason as Error).message,
     );
   });
 

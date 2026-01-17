@@ -5,7 +5,7 @@ import {
   type Response,
 } from "express";
 import { toNodeHandler } from "better-auth/node";
-import { auth } from "@/lib/auth.lib.js";
+import { getAuth } from "@/lib/auth.lib.js";
 import { successResponse } from "@/utils/index.util.js";
 import config from "@/config/env.config.js";
 import mongoose from "mongoose";
@@ -13,7 +13,7 @@ import APIError from "@/lib/api-error.lib.js";
 
 const router: Router = Router();
 
-router.all("/api/v1/auth/*splat", toNodeHandler(auth));
+router.all("/api/v1/auth/*splat", toNodeHandler(getAuth()));
 
 router.route("/").get((req: Request, res: Response, next: NextFunction) => {
   try {
@@ -55,8 +55,8 @@ router.use((req: Request, res: Response, next: NextFunction) => {
       404,
       "Route Not Found",
       true,
-      "The requested route does not exist"
-    )
+      "The requested route does not exist",
+    ),
   );
 });
 

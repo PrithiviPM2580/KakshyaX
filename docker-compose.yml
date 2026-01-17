@@ -1,16 +1,14 @@
-version: "3.9"
-
 services:
   backend:
     build:
-      context: ./backend # Dockerfile is inside backend/
+      context: ./backend
     ports:
       - "3000:3000"
     volumes:
       - ./backend:/app
       - /app/node_modules
     env_file:
-      - ./backend/.env # <-- point to your .env inside backend
+      - ./backend/.env
     depends_on:
       - mongo
 
