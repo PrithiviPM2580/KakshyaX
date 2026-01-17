@@ -4,7 +4,6 @@ export interface StudentDocument extends Document {
   firstName: string;
   lastName: string;
   email: string;
-  enrolledSubjects: mongoose.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,12 +27,6 @@ const studentSchema = new Schema<StudentDocument>(
       trim: true,
       lowercase: true,
     },
-    enrolledSubjects: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Subject",
-      },
-    ],
   },
   {
     timestamps: true,

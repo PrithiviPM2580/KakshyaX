@@ -5,7 +5,6 @@ export interface TeacherDocument extends Document {
   lastName: string;
   email: string;
   departmentId: mongoose.Types.ObjectId;
-  subjects: mongoose.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -34,12 +33,6 @@ const teacherSchema = new Schema<TeacherDocument>(
       ref: "Department",
       required: true,
     },
-    subjects: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Subject",
-      },
-    ],
   },
   {
     timestamps: true,

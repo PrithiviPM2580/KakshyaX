@@ -7,7 +7,7 @@ export interface ClassDocument extends Document {
   inviteCode: string;
   capacity: number;
   description: string;
-  status: "active";
+  status: "active" | "inactive" | "archived" | "completed";
   schedules: [
     {
       dayOfWeek: number;
@@ -55,7 +55,7 @@ const classSchema = new Schema<ClassDocument>(
     },
     status: {
       type: String,
-      enum: ["active"],
+      enum: ["active", "inactive", "archived", "completed"],
       default: "active",
     },
     schedules: [

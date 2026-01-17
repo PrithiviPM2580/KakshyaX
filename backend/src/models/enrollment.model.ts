@@ -2,7 +2,7 @@ import mongoose, { Document, Schema } from "mongoose";
 
 export interface EnrollmentDocument extends Document {
   studentId: mongoose.Types.ObjectId;
-  subjectId: mongoose.Types.ObjectId;
+  classId: mongoose.Types.ObjectId;
   enrollmentDate: Date;
   status: string;
   createdAt: Date;
@@ -16,9 +16,9 @@ const enrollmentSchema = new Schema<EnrollmentDocument>(
       ref: "Student",
       required: true,
     },
-    subjectId: {
+    classId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Subject",
+      ref: "Class",
       required: true,
     },
     enrollmentDate: {
@@ -37,8 +37,8 @@ const enrollmentSchema = new Schema<EnrollmentDocument>(
   },
 );
 
-enrollmentSchema.index({ studentId: 1, subjectId: 1 }, { unique: true });
-enrollmentSchema.index({ subjectId: 1 });
+enrollmentSchema.index({ studentId: 1, classId: 1 }, { unique: true });
+enrollmentSchema.index({ classId: 1 });
 
 const Enrollment = mongoose.model<EnrollmentDocument>(
   "Enrollment",
