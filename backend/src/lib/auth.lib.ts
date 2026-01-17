@@ -40,4 +40,5 @@ export const auth = betterAuth({
   secret: config.BETTER_AUTH_SECRET,
   baseURL: config.BETTER_AUTH_URL,
   basePath: "/api/v1/auth",
+  trustedOrigins: [config.CORS_ORIGIN],
 });
