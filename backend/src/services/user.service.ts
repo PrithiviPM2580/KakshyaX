@@ -1,6 +1,14 @@
-import type { GetAllUserInput } from "@/validator/user.validator.js";
+import type {
+  GetAllUserInput,
+  GetUserByIdInput,
+} from "@/validator/user.validator.js";
 import APIError from "@/lib/api-error.lib.js";
-import { findUsers, countUsers } from "@/repositories/user.repository.js";
+import {
+  findUsers,
+  countUsers,
+  findUserById,
+} from "@/repositories/user.repository.js";
+import { logger } from "better-auth";
 
 export async function getAllUserService(query: GetAllUserInput) {
   const { page, limit, search, sortBy, order } = query;
@@ -21,6 +29,7 @@ export async function getAllUserService(query: GetAllUserInput) {
   ]);
 
   if (!users || users.length === 0 || total === 0) {
+    logger.error("No users found in the database");
     throw new APIError(404, "No users found");
   }
 
@@ -35,4 +44,17 @@ export async function getAllUserService(query: GetAllUserInput) {
       hasPrevPage: page > 1,
     },
   };
+}
+
+export async function getUserByIdService(params: GetUserByIdInput) {
+  const { id } = params;
+
+  const user = await findUserById(id);
+
+  if (!user) {
+    logger.error(`User with id ${id} not found`);
+    throw new APIError(404, "User not found");
+  }
+
+  return user;
 }
