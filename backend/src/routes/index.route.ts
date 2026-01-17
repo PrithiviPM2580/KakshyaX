@@ -10,6 +10,7 @@ import { successResponse } from "@/utils/index.util.js";
 import config from "@/config/env.config.js";
 import mongoose from "mongoose";
 import APIError from "@/lib/api-error.lib.js";
+import userRoute from "@/routes/user.route.js";
 
 const router: Router = Router();
 
@@ -48,6 +49,8 @@ router
       next(error);
     }
   });
+
+router.use("/api/v1/users", userRoute);
 
 router.use((req: Request, res: Response, next: NextFunction) => {
   next(
