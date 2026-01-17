@@ -7,17 +7,22 @@ import type { Server } from "node:http";
 let isConnected = false;
 
 export async function connectToDatabase() {
+  if (isConnected) {
+    return mongoose.connection;
+  }
+
   try {
     await mongoose.connect(config.DATABASE_URL);
     isConnected = true;
     logger.info("Connected to the database successfully.");
+    return mongoose.connection;
   } catch (error) {
     logger.error("Database connection error:", error);
     throw new APIError(
       500,
       "Database connection error",
       true,
-      error as Errorresponse
+      error as Errorresponse,
     );
   }
 }
@@ -34,17 +39,10 @@ export async function disconnectFromDatabase() {
         500,
         "Database disconnection error",
         true,
-        error as Errorresponse
+        error as Errorresponse,
       );
     }
   }
-}
-
-export function getDatabaseConnection() {
-  if (!isConnected) {
-    throw new APIError(500, "Database is not connected", true);
-  }
-  return mongoose.connection;
 }
 
 export async function gracefullyCloseDatabaseConnection(server: Server) {
@@ -57,7 +55,7 @@ export async function gracefullyCloseDatabaseConnection(server: Server) {
       500,
       "Error during graceful shutdown",
       true,
-      error as Errorresponse
+      error as Errorresponse,
     );
   } finally {
     server.close(() => {
