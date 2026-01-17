@@ -41,4 +41,12 @@ export const auth = betterAuth({
   baseURL: config.BETTER_AUTH_URL,
   basePath: "/api/v1/auth",
   trustedOrigins: [config.CORS_ORIGIN],
+  session: {
+    expiresIn: 60 * 60 * 24 * 7, // 7 days - main session expiration
+    updateAge: 60 * 60 * 24, // 1 day - session refresh interval
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60, // 5 minutes - cookie cache duration
+    },
+  },
 });
