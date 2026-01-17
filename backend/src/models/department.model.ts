@@ -32,6 +32,8 @@ const departmentSchema = new Schema<DepartmentDocument>(
   },
 );
 
+departmentSchema.index({ code: 1 }, { unique: true });
+
 const Department = mongoose.model<DepartmentDocument>(
   "Department",
   departmentSchema,
