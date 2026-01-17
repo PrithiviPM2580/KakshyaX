@@ -1,5 +1,3 @@
-
-
 declare global {
   type ErrorDetails = {
     field?: string;
@@ -18,6 +16,13 @@ declare global {
     role: "admin" | "student" | "teacher";
   }
 
+  interface RequestValidate {
+    body?: ZodTypeAny;
+    query?: ZodTypeAny;
+    params?: ZodTypeAny;
+  }
+
+  type Roles = "admin" | "student" | "teacher";
 }
 
 export {};
