@@ -1,4 +1,6 @@
 import { db } from "@/lib/auth.lib.js";
+import { ObjectId } from "mongodb";
+import type { GetUserByIdInput } from "@/validator/user.validator.js";
 
 export async function findUsers(
   options: FindAllOptions,
@@ -46,4 +48,15 @@ export async function countUsers(options: {
   const total = await userCollection.countDocuments(filter);
 
   return total;
+}
+
+export async function findUserById(
+  id: GetUserByIdInput["id"],
+): Promise<Record<string, unknown> | null> {
+  return (await db
+    .collection("user")
+    .findOne({ _id: new ObjectId(id) })) as unknown as Record<
+    string,
+    unknown
+  > | null;
 }
