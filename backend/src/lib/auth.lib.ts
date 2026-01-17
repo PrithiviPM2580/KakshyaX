@@ -1,17 +1,14 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import { connectToDatabase } from "@/config/db.config.js";
+import { MongoClient } from "mongodb";
 import APIError from "./api-error.lib.js";
 import config from "@/config/env.config.js";
 
-const connection = await connectToDatabase();
+const client = new MongoClient(config.DATABASE_URL);
+const db = client.db();
 
-if (!connection.db) {
-  throw new APIError(500, "Database connection not established");
-}
-
-export const auth = betterAuth({
-  database: mongodbAdapter(connection.db),
+const auth = betterAuth({
+  database: mongodbAdapter(db),
   emailAndPassword: {
     enabled: true,
   },
@@ -50,3 +47,5 @@ export const auth = betterAuth({
     },
   },
 });
+
+export { auth, db };
