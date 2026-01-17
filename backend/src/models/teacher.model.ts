@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface TeacherDocument extends Document {
-  firstnamme: string;
+  firstName: string;
   lastName: string;
   email: string;
   departmentId: mongoose.Types.ObjectId;
@@ -12,7 +12,7 @@ export interface TeacherDocument extends Document {
 
 const teacherSchema = new Schema<TeacherDocument>(
   {
-    firstnamme: {
+    firstName: {
       type: String,
       required: true,
       trim: true,

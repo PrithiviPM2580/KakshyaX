@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-export interface SubjectDocument extends Document {
+export interface StudentDocument extends Document {
   firstName: string;
   lastName: string;
   email: string;
@@ -9,7 +9,7 @@ export interface SubjectDocument extends Document {
   updatedAt: Date;
 }
 
-const studentSchema = new Schema<SubjectDocument>(
+const studentSchema = new Schema<StudentDocument>(
   {
     firstName: {
       type: String,
@@ -42,6 +42,6 @@ const studentSchema = new Schema<SubjectDocument>(
 
 studentSchema.index({ email: 1 }, { unique: true });
 
-const Student = mongoose.model<SubjectDocument>("Student", studentSchema);
+const Student = mongoose.model<StudentDocument>("Student", studentSchema);
 
 export default Student;
