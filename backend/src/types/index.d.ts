@@ -23,6 +23,14 @@ declare global {
   }
 
   type Roles = "admin" | "student" | "teacher";
+
+  interface FindAllOptions {
+    skip: number;
+    limit: number;
+    search?: string | undefined;
+    sortBy: "createdAt" | "email" | "name";
+    order: "asc" | "desc";
+  }
 }
 
 export {};
