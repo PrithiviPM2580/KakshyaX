@@ -1,12 +1,6 @@
 import config from "@/config/env.config.js";
 import type { Request, Response } from "express";
 import { z } from "zod";
-export function formatIssues(issues: z.ZodError["issues"]) {
-  return issues.map((issue) => ({
-    field: issue.path.join("."),
-    message: issue.message,
-  }));
-}
 
 export const corsOptions = {
   origin: config.CORS_ORIGIN,
