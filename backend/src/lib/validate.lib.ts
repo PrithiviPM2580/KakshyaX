@@ -1,7 +1,7 @@
 import { z } from "zod";
 import APIError from "@/lib/api-error.lib.js";
 
-function formatIssues(issues: z.ZodError["issues"]) {
+export function formatIssues(issues: z.ZodError["issues"]) {
   return issues.map((issue) => ({
     field: issue.path.join("."),
     message: issue.message,

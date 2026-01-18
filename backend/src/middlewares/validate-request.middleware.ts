@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import type { z } from "zod";
 import APIError from "@/lib/api-error.lib.js";
 import logger from "@/lib/logger.lib.js";
-import { formatIssues } from "@/utils/index.util.js";
+import { formatIssues } from "@/lib/validate.lib.js";
 
 const validatePart = (
   part: "body" | "query" | "params",
@@ -29,7 +29,7 @@ const validatePart = (
     return false;
   }
 
-  (req[part] as unknown) = result.data;
+  Object.assign(req[part], result.data);
   return true;
 };
 

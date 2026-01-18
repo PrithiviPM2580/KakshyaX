@@ -34,10 +34,13 @@ const auth = betterAuth({
       redirectURI: config.GOOGLE_REDIRECT_URI,
     },
   },
+  advanced: {
+    disableCSRFCheck: true,
+  },
   secret: config.BETTER_AUTH_SECRET,
   baseURL: config.BETTER_AUTH_URL,
   basePath: "/api/v1/auth",
-  trustedOrigins: [config.CORS_ORIGIN],
+  trustedOrigins: [config.CORS_ORIGIN, "*"],
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days - main session expiration
     updateAge: 60 * 60 * 24, // 1 day - session refresh interval
