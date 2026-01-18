@@ -1,6 +1,7 @@
 import {
   getAllUsersController,
   getUserByIdController,
+  getUserDepartments,
 } from "@/controllers/user.controller.js";
 import asyncHandler from "@/middlewares/async-handler.middleware.js";
 import { authenticateMiddleware } from "@/middlewares/authenticate.middleware.js";
@@ -27,8 +28,17 @@ router
   .route("/:id")
   .get(
     apiLimitter,
-    authenticateMiddleware(),
+    authenticateMiddleware(["admin", "teacher", "student"]),
     validateRequestMiddleware(getUserByIdSchema),
     asyncHandler(getUserByIdController),
+  );
+
+router
+  .route("/:id/departments")
+  .get(
+    apiLimitter,
+    authenticateMiddleware(["admin", "teacher", "student"]),
+    validateRequestMiddleware(getUserByIdSchema),
+    asyncHandler(getUserDepartments),
   );
 export default router;

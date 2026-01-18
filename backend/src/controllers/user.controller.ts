@@ -19,7 +19,9 @@ export async function getAllUsersController(
 
   const users = await getAllUserService(query);
 
-  logger.info(`Fetched users from database`);
+  logger.info(`Fetched users from database`, {
+    label: "UserController",
+  });
 
   successResponse(res, 200, "Users fetched successfully", users);
 }
@@ -34,7 +36,27 @@ export async function getUserByIdController(
 
   const user = await getUserByIdService(params, userId);
 
-  logger.info(`Fetched user with id ${params.id} from database`);
+  logger.info(`Fetched user with id ${params.id} from database`, {
+    label: "UserController",
+  });
 
   successResponse(res, 200, "User fetched successfully", { user });
+}
+
+export async function getUserDepartments(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const params = getValidatedPart<GetUserByIdInput>(req, "params");
+  const userId = req.session?.user?.id;
+
+  const userDepartments = await getUserByIdService(params, userId);
+
+  logger.info(
+    `Fetched departments for user with id ${params.id} from database`,
+    {
+      label: "UserController",
+    },
+  );
 }

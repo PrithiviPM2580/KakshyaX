@@ -3,19 +3,19 @@ import mongoose, { Document, Schema } from "mongoose";
 export interface ClassDocument extends Document {
   name: string;
   subjectId: mongoose.Types.ObjectId;
+  departmentId: mongoose.Types.ObjectId;
   teacherId: mongoose.Types.ObjectId;
+  studentIds: mongoose.Types.ObjectId[];
   inviteCode: string;
   capacity: number;
-  description: string;
+  description?: string;
   status: "active" | "inactive" | "archived" | "completed";
-  schedules: [
-    {
-      dayOfWeek: number;
-      startTime: string;
-      endTime: string;
-    },
-  ];
-  banner: string;
+  schedules: {
+    dayOfWeek: number;
+    startTime: string;
+    endTime: string;
+  }[];
+  banner?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -32,11 +32,22 @@ const classSchema = new Schema<ClassDocument>(
       ref: "Subject",
       required: true,
     },
+    departmentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Department",
+      required: true,
+    },
     teacherId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Teacher",
       required: true,
     },
+    studentIds: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Student",
+      },
+    ],
     inviteCode: {
       type: String,
       required: true,
