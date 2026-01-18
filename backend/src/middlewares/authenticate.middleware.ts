@@ -3,7 +3,7 @@ import APIError from "@/lib/api-error.lib.js";
 import type { NextFunction, Request, Response } from "express";
 import { logger } from "better-auth";
 
-export function authenticateMiddleware(allowRoles: Roles[]) {
+export function authenticateMiddleware(allowRoles?: Roles[]) {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const session = await auth.api.getSession({
@@ -20,7 +20,7 @@ export function authenticateMiddleware(allowRoles: Roles[]) {
         return next(new APIError(401, "Unauthorized"));
       }
 
-      if (!allowRoles.includes(session.user.role as Roles)) {
+      if (allowRoles && !allowRoles.includes(session.user.role as Roles)) {
         logger.info(`User role ${session.user.role} not allowed`);
         return next(new APIError(403, "Forbidden"));
       }

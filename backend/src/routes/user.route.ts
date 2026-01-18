@@ -27,7 +27,7 @@ router
   .route("/:id")
   .get(
     apiLimitter,
-    authenticateMiddleware(["admin", "teacher"]),
+    authenticateMiddleware(),
     validateRequestMiddleware(getUserByIdSchema),
     asyncHandler(getUserByIdController),
   );
