@@ -12,7 +12,7 @@ import { logger } from "better-auth";
 
 export async function getAllUserService(
   query: GetAllUserInput,
-  userId: string | undefined,
+  userId?: string,
 ) {
   const { page, limit, search, sortBy, order } = query;
 
@@ -50,8 +50,21 @@ export async function getAllUserService(
   };
 }
 
-export async function getUserByIdService(params: GetUserByIdInput) {
+export async function getUserByIdService(
+  params: GetUserByIdInput,
+  userId?: string,
+) {
   const { id } = params;
+
+  if (!userId) {
+    logger.error("Unauthorized access attempt to get user by id");
+    throw new APIError(401, "Unauthorized");
+  }
+
+  if (userId !== id) {
+    logger.error(`User ${userId} tried to access profile of user ${id}`);
+    throw new APIError(403, "Forbidden: You can only view your own profile");
+  }
 
   const user = await findUserById(id);
 

@@ -26,5 +26,6 @@ export function getValidatedPart<T>(
   req: Request,
   part: "body" | "query" | "params",
 ): T {
-  return req[part] as unknown as T;
+  const validated = (req as any).validated?.[part];
+  return validated !== undefined ? validated : (req[part] as unknown as T);
 }

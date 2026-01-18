@@ -29,7 +29,8 @@ const validatePart = (
     return false;
   }
 
-  Object.assign(req[part], result.data);
+  (req as any).validated = (req as any).validated || {};
+  (req as any).validated[part] = result.data;
   return true;
 };
 

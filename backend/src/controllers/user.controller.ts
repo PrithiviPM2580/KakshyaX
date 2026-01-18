@@ -16,13 +16,12 @@ export async function getAllUsersController(
   next: NextFunction,
 ) {
   const query = getValidatedPart<GetAllUserInput>(req, "query");
-  const userId = req.session?.user?.id;
 
-  const users = await getAllUserService(query, userId);
+  const users = await getAllUserService(query);
 
-  logger.info(`Fetched ${users} users from database for user ${userId}`);
+  logger.info(`Fetched users from database`);
 
-  successResponse(res, 200, "Users fetched successfully", { users });
+  successResponse(res, 200, "Users fetched successfully", users);
 }
 
 export async function getUserByIdController(
@@ -31,8 +30,9 @@ export async function getUserByIdController(
   next: NextFunction,
 ) {
   const params = getValidatedPart<GetUserByIdInput>(req, "params");
+  const userId = req.session?.user?.id;
 
-  const user = await getUserByIdService(params);
+  const user = await getUserByIdService(params, userId);
 
   logger.info(`Fetched user with id ${params.id} from database`);
 
