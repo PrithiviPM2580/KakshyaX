@@ -1,11 +1,12 @@
+import "dotenv/config";
 import { db } from "@/lib/auth.lib.js";
 import { CREATE_USER } from "@/constants/index.constant.js";
-import { logger } from "better-auth";
+import logger from "@/lib/logger.lib.js";
 
 async function createUserSeeder() {
-  const users = db.collection("users");
+  const user = db.collection("user");
 
-  const createUsers = await users.insertMany(CREATE_USER);
+  const createUsers = await user.insertMany(CREATE_USER);
 
   logger.info(`Inserted ${createUsers.insertedCount} users into the database.`);
 
